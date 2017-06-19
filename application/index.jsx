@@ -13,9 +13,12 @@ class App extends Component {
 
 	render(){
 		return <Provider store={store}>
-			{renderRoutes()}
+			<div>
+				<h1>welcome.</h1>
+				{renderRoutes()}
+			</div>
 		</Provider>
 	}
 }
 
-ReactDOM.render(<App/>, document.body);
+ReactDOM.render(<App/>, document.getElementById('app'));

@@ -24,8 +24,8 @@ module.exports = function(env){
 		module:{
 			rules: [
 				{test: /\.css$/, use: 'css-loader'},
-				{test: /\.(js|jsx)$/, loader: 'babel-loader'},
-				{test: /\.(js|jsx)$/, loader: 'eslint-loader', enforce: 'pre'}
+				{test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/},
+				// {test: /\.(js|jsx)$/, use: 'eslint-loader', enforce: 'pre'}
 			]
 		},
 		resolve: {
@@ -33,6 +33,7 @@ module.exports = function(env){
 			extensions: ['.js', '.jsx']
 		},
 		plugins: [
+			new webpack.HotModuleReplacementPlugin(),
 	        new webpack.optimize.CommonsChunkPlugin({	
 	            names: ['main', 'manifest'] // Specify the common bundle's name.
 	        }),
@@ -44,7 +45,7 @@ module.exports = function(env){
 	            template: path.join(__dirname, 'application/index.html')
 	        }),
 	        new webpack.DefinePlugin({
-	            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+	            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
 	        })
 	    ]
 	}

@@ -1,11 +1,12 @@
-export default function common(state={}, action){
+export default function common(state={data: ''}, action){
+	let newState = {};
 	switch(action.type){
 		case 'SETCOMMONDATA':
-			Object.assign({}, state, action.data);
+			newState = Object.assign({}, state, action.data);
 			break;
 		default:
 			break;
 
 	}
-	return state;
+	return newState;
 }
