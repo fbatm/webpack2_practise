@@ -1,10 +1,16 @@
-import {createAsyncActionsTypes} from './asyn_action_type_util';
-
-// const asynTypes = createAsyncActionsTypes(['UPDATECOMMONDATA']);
+import asynTypes from './common_action_types';
+import {asyncRequest as asyncRequestCall} from '../api/api_calls';
 
 export function updateCommonData(data){
 	return {
 		data,
-		type: 'UPDATECOMMONDATA'//createAsyncActionsTypes('UPDATECOMMONDATA')
+		type: 'UPDATECOMMONDATA'
+	}
+}
+
+export function asyncRequest(params){
+	return {
+		apiCall: ()=>asyncRequestCall(params),
+		type: asynTypes.ASYNCREQUEST
 	}
 }

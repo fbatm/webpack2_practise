@@ -1,17 +1,21 @@
-import React, {Component} from 'React';
+import React, {Component} from 'react';
 import {connect}          from 'react-redux';
-import {updateCommonData} from '../actions/common';
+import {updateCommonData, asyncRequest} from '../actions/common';
 
 class HomePage extends Component{
-	render(){
-		return <div>
-			home.<input value={this.props.value} onChange={this.onChange}/>
-		</div>
+	componentDidMount(){
+		this.props.asyncRequest({test: 'abc'});
 	}
 
 	onChange=(e)=>{
 		this.props.dispatch(updateCommonData({data: e.target.value}));
 	}
+
+	render(){
+		return <div>
+			<textarea value={this.props.value} onChange={this.onChange}/>
+		</div>
+	}
 }
 
-export default connect(state=>{return {value: state.common.data}})(HomePage)
+export default connect(state=>({value: state.common.data}), {asyncRequest})(HomePage)
