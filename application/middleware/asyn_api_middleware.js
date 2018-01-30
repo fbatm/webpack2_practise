@@ -1,7 +1,7 @@
 let asyn_api_middleware = ({dispatch, getState})=>{
 	return (next)=>{
 		return (action)=>{
-			const {type, apiCall} = action;
+			const {type, apiCall, payload = {}} = action;
 
 			if(!type){
 				throw new Error('a type must be provided for an action');
@@ -16,11 +16,11 @@ let asyn_api_middleware = ({dispatch, getState})=>{
 				throw new Error('apiCall must be provided for an api request');
 			}
 
-			dispatch({type: type.request});
+			dispatch({payload, type: type.request});
 
 			return apiCall().then(
-				(result)=> Promise.resolve(dispatch({result, type: type.done})),
-				(result)=> Promise.resolve(dispatch({result, type: type.fail})),
+				(result)=> Promise.resolve(dispatch({payload, data: result, type: type.done})),
+				(result)=> Promise.resolve(dispatch({payload, error: result, type: type.fail}))
 			)
 		}
 	}
